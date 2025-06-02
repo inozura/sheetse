@@ -1,0 +1,75 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"ignore": [
+			".next",
+			"dist",
+			".turbo",
+			"dev-dist",
+			".zed",
+			".vscode",
+			"routeTree.gen.ts",
+			"src-tauri",
+			".nuxt",
+			".astro",
+			"prisma/generated"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"useExhaustiveDependencies": "off"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "off",
+					"fix": "safe",
+					"options": {
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
+			"suspicious": {
+				"noExplicitAny": "warn",
+				"noArrayIndexKey": "off",
+				"noShadowRestrictedNames": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "warn"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useSemanticElements": "off",
+				"noRedundantRoles": "off",
+				"useFocusableInteractive": "off"
+			},
+			"style": {
+				"noNonNullAssertion": "off",
+				"useImportType": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	}
+}
