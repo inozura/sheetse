@@ -1,7 +1,5 @@
-import Header from "@/components/header";
 import Loader from "@/components/loader";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
+import { AppProviders } from "@/components/providers/app-provider";
 import { ORPCContext, link, type orpc } from "@/utils/orpc";
 import { createORPCClient } from "@orpc/client";
 import { createORPCReactQueryUtils } from "@orpc/react-query";
@@ -17,7 +15,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useState } from "react";
 import type { appRouter } from "../../../server/src/routers";
-import "../index.css";
+import "../styles/global.css";
 
 export interface RouterAppContext {
 	orpc: typeof orpc;
@@ -29,7 +27,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 	head: () => ({
 		meta: [
 			{
-				title: "My App",
+				title: "Eshes",
 			},
 			{
 				name: "description",
@@ -59,13 +57,11 @@ function RootComponent() {
 		<>
 			<HeadContent />
 			<ORPCContext.Provider value={orpcUtils}>
-				<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-					<div className="grid h-svh grid-rows-[auto_1fr]">
-						<Header />
-						{isFetching ? <Loader /> : <Outlet />}
+				<AppProviders>
+					<div className="h-svh">
+						<Outlet />
 					</div>
-					<Toaster richColors />
-				</ThemeProvider>
+				</AppProviders>
 			</ORPCContext.Provider>
 			<TanStackRouterDevtools position="bottom-left" />
 			<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />

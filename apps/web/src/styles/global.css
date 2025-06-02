@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "tailwindcss";
+@import "./shadcn.css";
+@import "./intent.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Scope shadcn variables to layout components */
+.header,
+.sidebar,
+.navbar {
+	--bg: var(--shadcn-bg, var(--bg));
+	--fg: var(--shadcn-fg, var(--fg));
+	--primary: var(--shadcn-primary, var(--primary));
+	--secondary: var(--shadcn-secondary, var(--secondary));
+	--accent: var(--shadcn-accent, var(--accent));
+	--muted: var(--shadcn-muted, var(--muted));
+}
+
+/* Ensure shadcn styles apply only to layout components */
+.header,
+.sidebar,
+.navbar {
+	color: var(--foreground);
+	border-color: var(--border);
+}
+
+/* Apply justd styles to all other components */
+body,
+.main-content,
+.component {
+	background-color: var(--background);
+	color: var(--foreground);
+}
