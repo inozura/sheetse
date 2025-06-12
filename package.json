@@ -1,5 +1,5 @@
 {
-	"name": "sheetse",
+	"name": "sheetpipes",
 	"private": true,
 	"workspaces": ["apps/*", "packages/*"],
 	"scripts": {
