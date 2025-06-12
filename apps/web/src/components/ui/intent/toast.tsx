@@ -1,14 +1,14 @@
-import { useTheme } from "@/components/providers/theme-provider";
+import { useTheme } from "@/components/theme-provider";
 import { Toaster as ToasterPrimitive, type ToasterProps } from "sonner";
 
 const Toast = ({ ...props }: ToasterProps) => {
 	const { theme = "system" } = useTheme();
-
 	return (
 		<ToasterPrimitive
+			richColors
+			closeButton
 			theme={theme as ToasterProps["theme"]}
 			className="toaster group"
-			richColors
 			toastOptions={{
 				classNames: {
 					toast: "toast border-0! inset-ring! inset-ring-fg/10!",

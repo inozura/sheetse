@@ -15,10 +15,10 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { Description, Label } from "@/components/ui/field";
-import { Tooltip } from "@/components/ui/tooltip";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { twJoin, twMerge } from "tailwind-merge";
+import { Description, Label } from "./field";
+import { composeTailwindRenderProps } from "./primitive";
+import { Tooltip } from "./tooltip";
 
 const sliderStyles = tv({
 	base: "group relative flex touch-none select-none flex-col",
@@ -149,7 +149,7 @@ const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
 				className,
 				twJoin([
 					"[--slider:color-mix(in_oklab,var(--color-muted)_90%,black_10%)] dark:[--slider:color-mix(in_oklab,var(--color-muted)_90%,white_10%)]",
-					"group/track relative cursor-default rounded-full bg-(--slider) disabled:cursor-default disabled:opacity-60",
+					"group/track relative cursor-pointer rounded-full bg-(--slider) disabled:cursor-default disabled:opacity-60",
 					"grow group-data-[orientation=horizontal]:h-1.5 group-data-[orientation=horizontal]:w-full group-data-[orientation=vertical]:w-1.5 group-data-[orientation=vertical]:flex-1",
 				]),
 			)}
@@ -197,7 +197,7 @@ const thumbStyles = tv({
 	],
 	variants: {
 		isFocusVisible: {
-			true: "border-primary outline-hidden ring-ring/20",
+			true: "border-primary outline-hidden ring-primary/20",
 		},
 		isDragging: {
 			true: "size-[1.35rem] cursor-grabbing border-primary",

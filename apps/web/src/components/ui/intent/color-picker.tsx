@@ -6,20 +6,16 @@ import {
 	ColorPickerStateContext,
 } from "react-aria-components";
 
-import { Button } from "@/components/ui/button";
-import { ColorArea } from "@/components/ui/color-area";
-import { ColorField } from "@/components/ui/color-field";
-import { ColorSlider } from "@/components/ui/color-slider";
-import { ColorSwatch } from "@/components/ui/color-swatch";
-import { Description } from "@/components/ui/field";
-import {
-	Popover,
-	PopoverContent,
-	type PopoverContentProps,
-} from "@/components/ui/popover";
 import { IconEyeDropper } from "@intentui/icons";
 import { parseColor } from "@react-stately/color";
 import { twJoin, twMerge } from "tailwind-merge";
+import { Button } from "./button";
+import { ColorArea } from "./color-area";
+import { ColorField } from "./color-field";
+import { ColorSlider } from "./color-slider";
+import { ColorSwatch } from "./color-swatch";
+import { Description } from "./field";
+import { Popover, PopoverContent, type PopoverContentProps } from "./popover";
 
 interface ColorPickerProps
 	extends ColorPickerPrimitiveProps,
@@ -100,7 +96,7 @@ declare global {
 }
 
 const EyeDropper = () => {
-	const state = use(ColorPickerStateContext)!;
+	const state = use(ColorPickerStateContext);
 
 	if (!window.EyeDropper) {
 		return "EyeDropper is not supported in your browser.";
@@ -115,7 +111,7 @@ const EyeDropper = () => {
 				const eyeDropper = window.EyeDropper ? new window.EyeDropper() : null;
 				eyeDropper
 					?.open()
-					.then((result) => state.setColor(parseColor(result.sRGBHex)));
+					.then((result) => state?.setColor(parseColor(result.sRGBHex)));
 			}}
 		>
 			<IconEyeDropper />

@@ -1,5 +1,3 @@
-import { Link } from "@/components/ui/link";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconChevronLgRight } from "@intentui/icons";
 import { createContext, use } from "react";
 import type {
@@ -12,6 +10,8 @@ import {
 	Breadcrumbs as BreadcrumbsPrimitive,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { Link } from "./link";
+import { composeTailwindRenderProps } from "./primitive";
 
 type BreadcrumbsContextProps = { separator?: "chevron" | "slash" | boolean };
 const BreadcrumbsProvider = createContext<BreadcrumbsContextProps>({

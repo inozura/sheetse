@@ -17,9 +17,9 @@ import {
 	Separator,
 } from "react-aria-components";
 
-import { buttonStyles } from "@/components/ui/button";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { twMerge } from "tailwind-merge";
+import { buttonStyles } from "./button";
+import { composeTailwindRenderProps } from "./primitive";
 
 type PaginationProps = React.ComponentProps<"nav">;
 const Pagination = ({ className, ref, ...props }: PaginationProps) => (
@@ -126,7 +126,7 @@ const PaginationItem = ({
 					intent: "outline",
 					size: "small",
 					className: twMerge(
-						"cursor-default font-normal text-fg focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-ring/20",
+						"cursor-pointer font-normal text-fg focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-primary/20",
 						className,
 					),
 				}),
@@ -165,7 +165,7 @@ const PaginationItem = ({
 				{
 					textValue: "More pages",
 					className: twMerge(
-						"flex size-9 items-center justify-center rounded-lg border border-transparent focus:outline-hidden focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-ring/20",
+						"flex size-9 items-center justify-center rounded-lg border border-transparent focus:outline-hidden focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-primary/20",
 						className,
 					),
 					...props,
@@ -198,7 +198,7 @@ const PaginationItem = ({
 						intent: isCurrent ? "primary" : intent,
 						size,
 						className: twMerge(
-							"cursor-default font-normal min-w-10 tabular-nums disabled:cursor-default disabled:opacity-100 focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-ring/20",
+							"cursor-pointer font-normal tabular-nums disabled:cursor-default disabled:opacity-100 focus-visible:border-primary focus-visible:bg-primary/10 focus-visible:ring-4 focus-visible:ring-primary/20",
 							className,
 						),
 					}),

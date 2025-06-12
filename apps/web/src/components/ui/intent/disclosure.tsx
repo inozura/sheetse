@@ -1,4 +1,3 @@
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconChevronLeft } from "@intentui/icons";
 import type {
 	DisclosureGroupProps as AccordionProps,
@@ -13,6 +12,7 @@ import {
 	DisclosurePanel as CollapsiblePanel,
 	Heading,
 } from "react-aria-components";
+import { composeTailwindRenderProps } from "./primitive";
 
 interface DisclosureGroupProps extends AccordionProps {
 	ref?: React.RefObject<HTMLDivElement>;
@@ -30,7 +30,7 @@ const DisclosureGroup = ({
 			{...props}
 			className={composeTailwindRenderProps(
 				className,
-				"peer cursor-default disabled:cursor-not-allowed disabled:opacity-75",
+				"peer cursor-pointer disabled:cursor-not-allowed disabled:opacity-75",
 			)}
 		>
 			{(values) => (

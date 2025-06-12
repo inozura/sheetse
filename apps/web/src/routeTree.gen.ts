@@ -13,8 +13,17 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as TodosImport } from './routes/todos'
 import { Route as LoginImport } from './routes/login'
-import { Route as DashboardImport } from './routes/dashboard'
+import { Route as protectedRouteImport } from './routes/(protected)/route'
+import { Route as authRouteImport } from './routes/(auth)/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up/route'
+import { Route as authSignInRouteImport } from './routes/(auth)/sign-in/route'
+import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password/route'
+import { Route as protecteddashboardFilesRouteImport } from './routes/(protected)/(dashboard)/files/route'
+import { Route as protecteddashboardFilesIndexImport } from './routes/(protected)/(dashboard)/files/index'
+import { Route as protecteddashboardFilesTrashImport } from './routes/(protected)/(dashboard)/files/trash'
+import { Route as protecteddashboardFilesRecentImport } from './routes/(protected)/(dashboard)/files/recent'
+import { Route as protecteddashboardFilesAllProjectsImport } from './routes/(protected)/(dashboard)/files/all-projects'
 
 // Create/Update Routes
 
@@ -30,9 +39,13 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const protectedRouteRoute = protectedRouteImport.update({
+  id: '/(protected)',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const authRouteRoute = authRouteImport.update({
+  id: '/(auth)',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -41,6 +54,59 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const authSignUpRouteRoute = authSignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
+  getParentRoute: () => authRouteRoute,
+} as any)
+
+const authSignInRouteRoute = authSignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => authRouteRoute,
+} as any)
+
+const authForgotPasswordRouteRoute = authForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => authRouteRoute,
+} as any)
+
+const protecteddashboardFilesRouteRoute =
+  protecteddashboardFilesRouteImport.update({
+    id: '/(dashboard)/files',
+    path: '/files',
+    getParentRoute: () => protectedRouteRoute,
+  } as any)
+
+const protecteddashboardFilesIndexRoute =
+  protecteddashboardFilesIndexImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => protecteddashboardFilesRouteRoute,
+  } as any)
+
+const protecteddashboardFilesTrashRoute =
+  protecteddashboardFilesTrashImport.update({
+    id: '/trash',
+    path: '/trash',
+    getParentRoute: () => protecteddashboardFilesRouteRoute,
+  } as any)
+
+const protecteddashboardFilesRecentRoute =
+  protecteddashboardFilesRecentImport.update({
+    id: '/recent',
+    path: '/recent',
+    getParentRoute: () => protecteddashboardFilesRouteRoute,
+  } as any)
+
+const protecteddashboardFilesAllProjectsRoute =
+  protecteddashboardFilesAllProjectsImport.update({
+    id: '/all-projects',
+    path: '/all-projects',
+    getParentRoute: () => protecteddashboardFilesRouteRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -53,11 +119,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
+    '/(auth)': {
+      id: '/(auth)'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof authRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/(protected)': {
+      id: '/(protected)'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof protectedRouteImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -74,52 +147,217 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TodosImport
       parentRoute: typeof rootRoute
     }
+    '/(auth)/forgot-password': {
+      id: '/(auth)/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof authForgotPasswordRouteImport
+      parentRoute: typeof authRouteImport
+    }
+    '/(auth)/sign-in': {
+      id: '/(auth)/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof authSignInRouteImport
+      parentRoute: typeof authRouteImport
+    }
+    '/(auth)/sign-up': {
+      id: '/(auth)/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof authSignUpRouteImport
+      parentRoute: typeof authRouteImport
+    }
+    '/(protected)/(dashboard)/files': {
+      id: '/(protected)/(dashboard)/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof protecteddashboardFilesRouteImport
+      parentRoute: typeof protectedRouteImport
+    }
+    '/(protected)/(dashboard)/files/all-projects': {
+      id: '/(protected)/(dashboard)/files/all-projects'
+      path: '/all-projects'
+      fullPath: '/files/all-projects'
+      preLoaderRoute: typeof protecteddashboardFilesAllProjectsImport
+      parentRoute: typeof protecteddashboardFilesRouteImport
+    }
+    '/(protected)/(dashboard)/files/recent': {
+      id: '/(protected)/(dashboard)/files/recent'
+      path: '/recent'
+      fullPath: '/files/recent'
+      preLoaderRoute: typeof protecteddashboardFilesRecentImport
+      parentRoute: typeof protecteddashboardFilesRouteImport
+    }
+    '/(protected)/(dashboard)/files/trash': {
+      id: '/(protected)/(dashboard)/files/trash'
+      path: '/trash'
+      fullPath: '/files/trash'
+      preLoaderRoute: typeof protecteddashboardFilesTrashImport
+      parentRoute: typeof protecteddashboardFilesRouteImport
+    }
+    '/(protected)/(dashboard)/files/': {
+      id: '/(protected)/(dashboard)/files/'
+      path: '/'
+      fullPath: '/files/'
+      preLoaderRoute: typeof protecteddashboardFilesIndexImport
+      parentRoute: typeof protecteddashboardFilesRouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface authRouteRouteChildren {
+  authForgotPasswordRouteRoute: typeof authForgotPasswordRouteRoute
+  authSignInRouteRoute: typeof authSignInRouteRoute
+  authSignUpRouteRoute: typeof authSignUpRouteRoute
+}
+
+const authRouteRouteChildren: authRouteRouteChildren = {
+  authForgotPasswordRouteRoute: authForgotPasswordRouteRoute,
+  authSignInRouteRoute: authSignInRouteRoute,
+  authSignUpRouteRoute: authSignUpRouteRoute,
+}
+
+const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
+  authRouteRouteChildren,
+)
+
+interface protecteddashboardFilesRouteRouteChildren {
+  protecteddashboardFilesAllProjectsRoute: typeof protecteddashboardFilesAllProjectsRoute
+  protecteddashboardFilesRecentRoute: typeof protecteddashboardFilesRecentRoute
+  protecteddashboardFilesTrashRoute: typeof protecteddashboardFilesTrashRoute
+  protecteddashboardFilesIndexRoute: typeof protecteddashboardFilesIndexRoute
+}
+
+const protecteddashboardFilesRouteRouteChildren: protecteddashboardFilesRouteRouteChildren =
+  {
+    protecteddashboardFilesAllProjectsRoute:
+      protecteddashboardFilesAllProjectsRoute,
+    protecteddashboardFilesRecentRoute: protecteddashboardFilesRecentRoute,
+    protecteddashboardFilesTrashRoute: protecteddashboardFilesTrashRoute,
+    protecteddashboardFilesIndexRoute: protecteddashboardFilesIndexRoute,
+  }
+
+const protecteddashboardFilesRouteRouteWithChildren =
+  protecteddashboardFilesRouteRoute._addFileChildren(
+    protecteddashboardFilesRouteRouteChildren,
+  )
+
+interface protectedRouteRouteChildren {
+  protecteddashboardFilesRouteRoute: typeof protecteddashboardFilesRouteRouteWithChildren
+}
+
+const protectedRouteRouteChildren: protectedRouteRouteChildren = {
+  protecteddashboardFilesRouteRoute:
+    protecteddashboardFilesRouteRouteWithChildren,
+}
+
+const protectedRouteRouteWithChildren = protectedRouteRoute._addFileChildren(
+  protectedRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/': typeof protectedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/todos': typeof TodosRoute
+  '/forgot-password': typeof authForgotPasswordRouteRoute
+  '/sign-in': typeof authSignInRouteRoute
+  '/sign-up': typeof authSignUpRouteRoute
+  '/files': typeof protecteddashboardFilesRouteRouteWithChildren
+  '/files/all-projects': typeof protecteddashboardFilesAllProjectsRoute
+  '/files/recent': typeof protecteddashboardFilesRecentRoute
+  '/files/trash': typeof protecteddashboardFilesTrashRoute
+  '/files/': typeof protecteddashboardFilesIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/': typeof protectedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/todos': typeof TodosRoute
+  '/forgot-password': typeof authForgotPasswordRouteRoute
+  '/sign-in': typeof authSignInRouteRoute
+  '/sign-up': typeof authSignUpRouteRoute
+  '/files/all-projects': typeof protecteddashboardFilesAllProjectsRoute
+  '/files/recent': typeof protecteddashboardFilesRecentRoute
+  '/files/trash': typeof protecteddashboardFilesTrashRoute
+  '/files': typeof protecteddashboardFilesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/(auth)': typeof authRouteRouteWithChildren
+  '/(protected)': typeof protectedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/todos': typeof TodosRoute
+  '/(auth)/forgot-password': typeof authForgotPasswordRouteRoute
+  '/(auth)/sign-in': typeof authSignInRouteRoute
+  '/(auth)/sign-up': typeof authSignUpRouteRoute
+  '/(protected)/(dashboard)/files': typeof protecteddashboardFilesRouteRouteWithChildren
+  '/(protected)/(dashboard)/files/all-projects': typeof protecteddashboardFilesAllProjectsRoute
+  '/(protected)/(dashboard)/files/recent': typeof protecteddashboardFilesRecentRoute
+  '/(protected)/(dashboard)/files/trash': typeof protecteddashboardFilesTrashRoute
+  '/(protected)/(dashboard)/files/': typeof protecteddashboardFilesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/todos'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/todos'
+    | '/forgot-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/files'
+    | '/files/all-projects'
+    | '/files/recent'
+    | '/files/trash'
+    | '/files/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/todos'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/todos'
+  to:
+    | '/'
+    | '/login'
+    | '/todos'
+    | '/forgot-password'
+    | '/sign-in'
+    | '/sign-up'
+    | '/files/all-projects'
+    | '/files/recent'
+    | '/files/trash'
+    | '/files'
+  id:
+    | '__root__'
+    | '/'
+    | '/(auth)'
+    | '/(protected)'
+    | '/login'
+    | '/todos'
+    | '/(auth)/forgot-password'
+    | '/(auth)/sign-in'
+    | '/(auth)/sign-up'
+    | '/(protected)/(dashboard)/files'
+    | '/(protected)/(dashboard)/files/all-projects'
+    | '/(protected)/(dashboard)/files/recent'
+    | '/(protected)/(dashboard)/files/trash'
+    | '/(protected)/(dashboard)/files/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  authRouteRoute: typeof authRouteRouteWithChildren
+  protectedRouteRoute: typeof protectedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   TodosRoute: typeof TodosRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  authRouteRoute: authRouteRouteWithChildren,
+  protectedRouteRoute: protectedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   TodosRoute: TodosRoute,
 }
@@ -135,7 +373,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard",
+        "/(auth)",
+        "/(protected)",
         "/login",
         "/todos"
       ]
@@ -143,14 +382,63 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
+    "/(auth)": {
+      "filePath": "(auth)/route.tsx",
+      "children": [
+        "/(auth)/forgot-password",
+        "/(auth)/sign-in",
+        "/(auth)/sign-up"
+      ]
+    },
+    "/(protected)": {
+      "filePath": "(protected)/route.tsx",
+      "children": [
+        "/(protected)/(dashboard)/files"
+      ]
     },
     "/login": {
       "filePath": "login.tsx"
     },
     "/todos": {
       "filePath": "todos.tsx"
+    },
+    "/(auth)/forgot-password": {
+      "filePath": "(auth)/forgot-password/route.tsx",
+      "parent": "/(auth)"
+    },
+    "/(auth)/sign-in": {
+      "filePath": "(auth)/sign-in/route.tsx",
+      "parent": "/(auth)"
+    },
+    "/(auth)/sign-up": {
+      "filePath": "(auth)/sign-up/route.tsx",
+      "parent": "/(auth)"
+    },
+    "/(protected)/(dashboard)/files": {
+      "filePath": "(protected)/(dashboard)/files/route.tsx",
+      "parent": "/(protected)",
+      "children": [
+        "/(protected)/(dashboard)/files/all-projects",
+        "/(protected)/(dashboard)/files/recent",
+        "/(protected)/(dashboard)/files/trash",
+        "/(protected)/(dashboard)/files/"
+      ]
+    },
+    "/(protected)/(dashboard)/files/all-projects": {
+      "filePath": "(protected)/(dashboard)/files/all-projects.tsx",
+      "parent": "/(protected)/(dashboard)/files"
+    },
+    "/(protected)/(dashboard)/files/recent": {
+      "filePath": "(protected)/(dashboard)/files/recent.tsx",
+      "parent": "/(protected)/(dashboard)/files"
+    },
+    "/(protected)/(dashboard)/files/trash": {
+      "filePath": "(protected)/(dashboard)/files/trash.tsx",
+      "parent": "/(protected)/(dashboard)/files"
+    },
+    "/(protected)/(dashboard)/files/": {
+      "filePath": "(protected)/(dashboard)/files/index.tsx",
+      "parent": "/(protected)/(dashboard)/files"
     }
   }
 }

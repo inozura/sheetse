@@ -9,6 +9,7 @@ import { orpc, queryClient } from "./utils/orpc";
 const router = createRouter({
 	routeTree,
 	defaultPreload: "intent",
+	defaultPreloadDelay: 5_000,
 	defaultPendingComponent: () => <Loader />,
 	context: { orpc, queryClient },
 	Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {

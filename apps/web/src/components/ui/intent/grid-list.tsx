@@ -10,9 +10,9 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { Checkbox } from "@/components/ui/checkbox";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { twMerge } from "tailwind-merge";
+import { Checkbox } from "./checkbox";
+import { composeTailwindRenderProps } from "./primitive";
 
 const GridList = <T extends object>({
 	children,
@@ -22,7 +22,7 @@ const GridList = <T extends object>({
 	<GridListPrimitive
 		className={composeTailwindRenderProps(
 			className,
-			"relative max-h-96 scroll-py-1 overflow-y-scroll overscroll-contain rounded-lg border *:data-drop-target:border *:data-drop-target:border-accent",
+			"relative max-h-96 overflow-auto rounded-lg border [scrollbar-width:thin] *:data-drop-target:border *:data-drop-target:border-accent [&::-webkit-scrollbar]:size-0.5",
 		)}
 		{...props}
 	>
@@ -31,7 +31,7 @@ const GridList = <T extends object>({
 );
 
 const itemStyles = tv({
-	base: "group -mb-px -outline-offset-2 relative flex cursor-default select-none gap-3 border-y px-3 py-2 text-fg outline-hidden transition [--selected-item-hovered:--color-muted]/70 [--selected-item:var(--color-muted)]/80 first:rounded-t-md first:border-t-0 last:mb-0 last:rounded-b-md last:border-b-0 sm:text-sm",
+	base: "group -mb-px -outline-offset-2 relative flex cursor-default select-none gap-3 border-y px-3 py-2 text-fg outline-hidden transition [--selected-item-hovered:theme(--color-muted/70%)] [--selected-item:theme(--color-muted/80%)] first:rounded-t-md first:border-t-0 last:mb-0 last:rounded-b-md last:border-b-0 sm:text-sm",
 	variants: {
 		isHovered: { true: "bg-subtle" },
 		isSelected: {

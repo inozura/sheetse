@@ -13,9 +13,9 @@ export default defineConfig({
 		VitePWA({
 			registerType: "autoUpdate",
 			manifest: {
-				name: "sheetse",
-				short_name: "sheetse",
-				description: "sheetse - PWA Application",
+				name: "sheetpipes",
+				short_name: "sheetpipes",
+				description: "sheetpipes - PWA Application",
 				theme_color: "#0c0c0c",
 			},
 			pwaAssets: {

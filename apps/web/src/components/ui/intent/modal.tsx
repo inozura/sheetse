@@ -1,14 +1,3 @@
-import {
-	Dialog,
-	DialogBody,
-	DialogClose,
-	DialogCloseIcon,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
 import type {
 	DialogProps,
 	DialogTriggerProps,
@@ -21,6 +10,18 @@ import {
 	composeRenderProps,
 } from "react-aria-components";
 import { type VariantProps, tv } from "tailwind-variants";
+
+import {
+	Dialog,
+	DialogBody,
+	DialogClose,
+	DialogCloseIcon,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "./dialog";
 
 const Modal = (props: DialogTriggerProps) => {
 	return <DialogTriggerPrimitive {...props} />;

@@ -16,12 +16,15 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { twMerge } from "tailwind-merge";
+import { DialogTrigger } from "./dialog";
 import type {
 	DialogBodyProps,
 	DialogFooterProps,
 	DialogHeaderProps,
 	DialogTitleProps,
-} from "@/components/ui/dialog";
+} from "./dialog";
 import {
 	Dialog,
 	DialogBody,
@@ -30,10 +33,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { twMerge } from "tailwind-merge";
+} from "./dialog";
 
 type PopoverProps = DialogTriggerProps;
 const Popover = (props: PopoverProps) => {
@@ -73,7 +73,7 @@ const content = tv({
 	],
 	variants: {
 		isPicker: {
-			true: "min-w-(--trigger-width)",
+			true: "max-h-72 min-w-(--trigger-width) overflow-y-auto",
 			false: "min-w-80",
 		},
 		isMenu: {
@@ -136,7 +136,7 @@ const PopoverContent = ({
 	...props
 }: PopoverContentProps) => {
 	const isMobile = useMediaQuery("(max-width: 600px)");
-	const popoverContext = useSlottedContext(PopoverContext)!;
+	const popoverContext = useSlottedContext(PopoverContext);
 	const isMenuTrigger = popoverContext?.trigger === "MenuTrigger";
 	const isSubmenuTrigger = popoverContext?.trigger === "SubmenuTrigger";
 	const isMenu = isMenuTrigger || isSubmenuTrigger;

@@ -1,7 +1,3 @@
-import { DropdownKeyboard } from "@/components/ui/dropdown";
-import { Loader } from "@/components/ui/loader";
-import { Menu, type MenuSectionProps } from "@/components/ui/menu";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconSearch } from "@intentui/icons";
 import { createContext, use, useEffect } from "react";
 import type {
@@ -30,6 +26,10 @@ import {
 	useFilter,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { DropdownKeyboard } from "./dropdown";
+import { Loader } from "./loader";
+import { Menu, type MenuSectionProps } from "./menu";
+import { composeTailwindRenderProps } from "./primitive";
 
 interface CommandMenuProviderProps {
 	isPending?: boolean;
@@ -139,7 +139,7 @@ const CommandMenuSearch = ({
 	placeholder,
 	...props
 }: CommandMenuSearchProps) => {
-	const state = use(OverlayTriggerStateContext)!;
+	const state = use(OverlayTriggerStateContext);
 	const { isPending, escapeButton } = useCommandMenu();
 	return (
 		<SearchField
@@ -166,7 +166,7 @@ const CommandMenuSearch = ({
 			{escapeButton && (
 				<Button
 					onPress={() => state?.close()}
-					className="hidden cursor-default rounded border text-current/90 hover:bg-muted lg:inline lg:px-1.5 lg:py-0.5 lg:text-xs"
+					className="hidden cursor-pointer rounded border text-current/90 hover:bg-muted lg:inline lg:px-1.5 lg:py-0.5 lg:text-xs"
 				>
 					Esc
 				</Button>
@@ -201,8 +201,8 @@ const CommandMenuSection = <T extends object>({
 		<MenuSection
 			ref={ref}
 			className={twMerge(
-				"col-span-full grid grid-cols-[auto_1fr] gap-y-[calc(var(--spacing)*0.25)]",
 				className,
+				"col-span-full grid grid-cols-[auto_1fr] gap-y-[calc(var(--spacing)*0.25)]",
 			)}
 			{...props}
 		>
@@ -287,22 +287,6 @@ const CommandMenuSeparator = ({
 	<Menu.Separator className={twMerge("-mx-2", className)} {...props} />
 );
 
-const CommandMenuFooter = ({
-	className,
-	...props
-}: React.ComponentProps<"div">) => {
-	return (
-		<div
-			className={twMerge(
-				"col-span-full border-t px-2.5 py-2 text-muted-fg text-sm",
-				"*:[kbd]:inset-ring *:[kbd]:inset-ring-fg/10 *:[kbd]:mx-1 *:[kbd]:inline-grid *:[kbd]:h-4 *:[kbd]:min-w-4 *:[kbd]:place-content-center *:[kbd]:rounded-xs *:[kbd]:bg-secondary ",
-				className,
-			)}
-			{...props}
-		/>
-	);
-};
-
 const CommandMenuLabel = Menu.Label;
 const CommandMenuKeyboard = DropdownKeyboard;
 CommandMenu.Search = CommandMenuSearch;
@@ -313,7 +297,6 @@ CommandMenu.Section = CommandMenuSection;
 CommandMenu.Description = CommandMenuDescription;
 CommandMenu.Keyboard = CommandMenuKeyboard;
 CommandMenu.Separator = CommandMenuSeparator;
-CommandMenu.Footer = CommandMenuFooter;
 
 export type {
 	CommandMenuProps,

@@ -1,25 +1,3 @@
-import {
-	DropdownItem,
-	DropdownLabel,
-	DropdownSection,
-} from "@/components/ui/dropdown";
-import {
-	Description,
-	FieldGroup,
-	type FieldProps,
-	Input,
-	Label,
-} from "@/components/ui/field";
-import { ListBox } from "@/components/ui/list-box";
-import { PopoverContent } from "@/components/ui/popover";
-import {
-	type RestrictedIntent,
-	Tag,
-	TagGroup,
-	type TagGroupProps,
-	TagList,
-} from "@/components/ui/tag-group";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconChevronLgDown } from "@intentui/icons";
 import {
 	Children,
@@ -39,6 +17,24 @@ import type {
 } from "react-aria-components";
 import { Button, ComboBox, Group } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { DropdownItem, DropdownLabel, DropdownSection } from "./dropdown";
+import {
+	Description,
+	FieldGroup,
+	type FieldProps,
+	Input,
+	Label,
+} from "./field";
+import { ListBox } from "./list-box";
+import { PopoverContent } from "./popover";
+import { composeTailwindRenderProps } from "./primitive";
+import {
+	type RestrictedIntent,
+	Tag,
+	TagGroup,
+	type TagGroupProps,
+	TagList,
+} from "./tag-group";
 
 interface MultipleSelectProps<T>
 	extends Omit<ListBoxProps<T>, "renderEmptyState">,
@@ -100,9 +96,9 @@ const MultipleSelect = <T extends object>({
 
 	const addItem = (e: Key | null) => {
 		if (!e || isMax) return;
-		onSelectionChange?.((s) => new Set([...s, e!]));
+		onSelectionChange?.((s) => new Set([...s, e]));
 		// @ts-expect-error incompatible type Key and Selection
-		props.onSelectionChange?.((s) => new Set([...s, e!]));
+		props.onSelectionChange?.((s) => new Set([...s, e]));
 	};
 
 	const removeItem = (e: Set<Key>) => {
@@ -242,7 +238,7 @@ const MultipleSelect = <T extends object>({
 								}}
 							>
 								<ListBox
-									className="max-h-[inherit] min-w-[inherit] border-0 shadow-0"
+									className="max-h-80 border-0 shadow-0"
 									renderEmptyState={() =>
 										renderEmptyState ? (
 											renderEmptyState(inputValue)

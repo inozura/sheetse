@@ -1,9 +1,4 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Sheet } from "@/components/ui/sheet";
-import { Tooltip } from "@/components/ui/tooltip";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import {
 	IconChevronLgDown,
 	IconHamburger,
@@ -39,8 +34,13 @@ import {
 } from "react-aria-components";
 import { twJoin, twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
+import { Badge } from "./badge";
+import { Button } from "./button";
+import { composeTailwindRenderProps } from "./primitive";
+import { Sheet } from "./sheet";
+import { Tooltip } from "./tooltip";
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state";
+const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 type SidebarContextProps = {
 	state: "expanded" | "collapsed";
@@ -167,9 +167,9 @@ const gap = tv({
 			fleet:
 				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-(--sidebar-width-dock)",
 			float:
-				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+--spacing(4))]",
+				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+theme(spacing.4))]",
 			inset:
-				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+--spacing(2))]",
+				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+theme(spacing.2))]",
 		},
 	},
 });
@@ -188,9 +188,9 @@ const sidebar = tv({
 		},
 		intent: {
 			float:
-				"bg-bg p-2 group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(--spacing(4)+2px)]",
+				"bg-bg p-2 group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var+theme(spacing.4)+2px)]",
 			inset: [
-				"bg-sidebar p-2 group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+--spacing(2)+2px)] dark:bg-bg",
+				"bg-sidebar p-2 group-data-[sidebar-collapsible=dock]/sidebar-container:w-[calc(var(--sidebar-width-dock)+theme(spacing.2)+2px)] dark:bg-bg",
 			],
 			fleet: [
 				"group-data-[sidebar-collapsible=dock]/sidebar-container:w-(--sidebar-width-dock)",
@@ -513,7 +513,7 @@ const SidebarItem = ({
 								shape="square"
 								intent="primary"
 								data-slot="sidebar-badge"
-								className="-translate-y-1/2 absolute inset-ring-1 inset-ring-ring/20 inset-y-1/2 right-1.5 h-5.5 w-auto text-[10px] transition-colors group-data-current:inset-ring-transparent"
+								className="-translate-y-1/2 absolute inset-ring-1 inset-ring-primary/20 inset-y-1/2 right-1.5 h-5.5 w-auto text-[10px] transition-colors group-data-current:inset-ring-transparent"
 							>
 								{badge}
 							</Badge>
@@ -586,9 +586,9 @@ const SidebarInset = ({
 		<main
 			ref={ref}
 			className={twMerge(
-				"relative flex min-h-svh w-full flex-1 flex-col peer-data-[sidebar-intent=inset]:border peer-data-[sidebar-intent=inset]:border-(--sidebar-border) lg:min-w-0",
+				"relative flex min-h-svh w-full flex-1 flex-col peer-data-[sidebar-intent=inset]:border peer-data-[sidebar-intent=inset]:border-(--sidebar-border)",
 				"bg-bg peer-data-[sidebar-intent=inset]:overflow-hidden dark:peer-data-[sidebar-intent=inset]:bg-sidebar",
-				"peer-data-[sidebar-intent=inset]:min-h-[calc(100svh---spacing(4))] md:peer-data-[sidebar-state=collapsed]:peer-data-[sidebar-intent=inset]:ml-2 md:peer-data-[sidebar-intent=inset]:m-2 md:peer-data-[sidebar-intent=inset]:ml-0 md:peer-data-[sidebar-intent=inset]:rounded-xl md:peer-data-[sidebar-intent=inset]:shadow-xs",
+				"peer-data-[sidebar-intent=inset]:min-h-[calc(100svh-theme(spacing.4))] md:peer-data-[sidebar-state=collapsed]:peer-data-[sidebar-intent=inset]:ml-2 md:peer-data-[sidebar-intent=inset]:m-2 md:peer-data-[sidebar-intent=inset]:ml-0 md:peer-data-[sidebar-intent=inset]:rounded-xl md:peer-data-[sidebar-intent=inset]:shadow-xs",
 				className,
 			)}
 			{...props}
@@ -630,7 +630,7 @@ const SidebarDisclosure = ({
 			data-sidebar-disclosure="true"
 			className={composeTailwindRenderProps(
 				className,
-				state === "expanded" ? "px-2.5" : "col-span-full",
+				twMerge(state === "expanded" ? "px-2.5" : "col-span-full"),
 			)}
 			{...props}
 		/>
@@ -639,7 +639,7 @@ const SidebarDisclosure = ({
 
 const sidebarDisclosureTrigger = tv({
 	base: [
-		"group relative flex w-full cursor-default items-center overflow-hidden rounded-lg px-[calc(var(--spacing)*2.3)] py-[calc(var(--spacing)*1.3)] text-sidebar-fg/70 outline-hidden sm:text-sm/6",
+		"group relative flex w-full cursor-pointer items-center overflow-hidden rounded-lg px-[calc(var(--spacing)*2.3)] py-[calc(var(--spacing)*1.3)] text-sidebar-fg/70 outline-hidden sm:text-sm/6",
 		"in-data-[sidebar-intent=fleet]:rounded-none in-data-[sidebar-intent=fleet]:py-2 in-data-[sidebar-intent=fleet]:**:data-[slot=chevron]:hidden",
 	],
 	variants: {
@@ -651,7 +651,7 @@ const sidebarDisclosureTrigger = tv({
 			true: "bg-(--sidebar-accent) text-sidebar-fg",
 		},
 		isDisabled: {
-			true: "opacity-50",
+			true: "cursor-default opacity-50",
 		},
 	},
 });
@@ -702,17 +702,13 @@ const SidebarDisclosureTrigger = ({
 	);
 };
 
-const SidebarDisclosurePanel = ({
-	className,
-	...props
-}: React.ComponentProps<typeof DisclosurePanel>) => {
+const SidebarDisclosurePanel = (
+	props: React.ComponentProps<typeof DisclosurePanel>,
+) => {
 	return (
 		<DisclosurePanel
 			data-sidebar-disclosure-panel="true"
-			className={composeTailwindRenderProps(
-				className,
-				"col-span-full grid grid-cols-[auto_1fr] gap-y-0.5",
-			)}
+			className="col-span-full grid grid-cols-[auto_1fr] gap-y-0.5"
 			{...props}
 		/>
 	);
@@ -723,7 +719,7 @@ const SidebarSeparator = ({ className, ...props }: SidebarSeparatorProps) => {
 		<Separator
 			orientation="horizontal"
 			className={twMerge(
-				"col-span-full mx-auto my-2.5 h-px w-[calc(var(--sidebar-width)--spacing(6))] bg-border",
+				"col-span-full mx-auto my-2.5 h-px w-[calc(var(--sidebar-width)-theme(spacing.6))] bg-border",
 				className,
 			)}
 			{...props}

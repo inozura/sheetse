@@ -1,19 +1,22 @@
 import { IconCheck, IconHamburger } from "@intentui/icons";
-import type { ListBoxItemProps, ListBoxProps } from "react-aria-components";
+import type {
+	ListBoxItemProps as ListBoxItemPrimitiveProps,
+	ListBoxProps,
+} from "react-aria-components";
 import {
 	ListBoxItem as ListBoxItemPrimitive,
 	ListBox as ListBoxPrimitive,
 	composeRenderProps,
 } from "react-aria-components";
 
+import { twMerge } from "tailwind-merge";
 import {
-	DropdownDescription,
+	DropdownItemDetails,
 	DropdownLabel,
 	DropdownSection,
 	dropdownItemStyles,
-} from "@/components/ui/dropdown";
-import { composeTailwindRenderProps } from "@/lib/primitive";
-import { twMerge } from "tailwind-merge";
+} from "./dropdown";
+import { composeTailwindRenderProps } from "./primitive";
 
 const ListBox = <T extends object>({
 	className,
@@ -23,17 +26,24 @@ const ListBox = <T extends object>({
 		{...props}
 		className={composeTailwindRenderProps(
 			className,
-			"grid max-h-96 w-full min-w-56 scroll-py-1 grid-cols-[auto_1fr] flex-col gap-y-1 overflow-y-scroll overscroll-contain rounded-xl border p-1 shadow-lg outline-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:size-0.5 *:[[role='group']+[role=group]]:mt-4 *:[[role='group']+[role=separator]]:mt-1",
+			"grid max-h-96 w-full min-w-56 grid-cols-[auto_1fr] flex-col gap-y-1 overflow-auto overflow-y-auto rounded-xl border p-1 shadow-lg outline-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:size-0.5 *:[[role='group']+[role=group]]:mt-4 *:[[role='group']+[role=separator]]:mt-1",
 		)}
 	/>
 );
+
+interface ListBoxItemProps<T extends object>
+	extends ListBoxItemPrimitiveProps<T> {
+	className?: string;
+}
 
 const ListBoxItem = <T extends object>({
 	children,
 	className,
 	...props
 }: ListBoxItemProps<T>) => {
-	const textValue = typeof children === "string" ? children : undefined;
+	const textValue =
+		props.textValue || (typeof children === "string" ? children : undefined);
+
 	return (
 		<ListBoxItemPrimitive
 			textValue={textValue}
@@ -88,19 +98,11 @@ const ListBoxSection = ({ className, ...props }: ListBoxSectionProps) => {
 	);
 };
 
-const ListBoxLabel = DropdownLabel;
-const ListBoxDescription = DropdownDescription;
+const ListBoxItemDetails = DropdownItemDetails;
 
 ListBox.Section = ListBoxSection;
-ListBox.Label = ListBoxLabel;
-ListBox.Description = ListBoxDescription;
+ListBox.ItemDetails = ListBoxItemDetails;
 ListBox.Item = ListBoxItem;
 
 export type { ListBoxItemProps, ListBoxSectionProps };
-export {
-	ListBox,
-	ListBoxSection,
-	ListBoxItem,
-	ListBoxLabel,
-	ListBoxDescription,
-};
+export { ListBox, ListBoxSection, ListBoxItem };

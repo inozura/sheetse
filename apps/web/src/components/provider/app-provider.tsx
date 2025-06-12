@@ -1,5 +1,5 @@
+import { ThemeProvider } from "../theme-provider";
 import { Toast } from "../ui/intent/toast";
-import { ThemeProvider } from "./theme-provider";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
 	return (

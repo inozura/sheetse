@@ -1,11 +1,4 @@
 import {
-	Description,
-	FieldError,
-	FieldGroup,
-	Label,
-} from "@/components/ui/field";
-import { composeTailwindRenderProps } from "@/lib/primitive";
-import {
 	DateField as DateFieldPrimitive,
 	type DateFieldProps as DateFieldPrimitiveProps,
 	DateInput as DateInputPrimitive,
@@ -15,6 +8,8 @@ import {
 	type ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
+import { Description, FieldError, FieldGroup, Label } from "./field";
+import { composeTailwindRenderProps } from "./primitive";
 
 interface DateFieldProps<T extends DateValue>
 	extends DateFieldPrimitiveProps<T> {

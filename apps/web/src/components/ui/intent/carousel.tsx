@@ -1,13 +1,22 @@
+import type { HTMLAttributes } from "react";
 import { createContext, use, useCallback, useEffect, useState } from "react";
 
 import { IconChevronLgLeft, IconChevronLgRight } from "@intentui/icons";
 import useEmblaCarousel, {
 	type UseEmblaCarouselType,
 } from "embla-carousel-react";
+import {
+	ListBox,
+	ListBoxItem,
+	type ListBoxItemProps,
+	ListBoxSection,
+	type ListBoxSectionProps,
+} from "react-aria-components";
 
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { composeTailwindRenderProps } from "@/lib/primitive";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
+import type { ButtonProps } from "./button";
+import { Button } from "./button";
+import { composeTailwindRenderProps } from "./primitive";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -43,7 +52,7 @@ interface CarouselRootProps {
 }
 
 interface CarouselProps
-	extends React.HTMLAttributes<HTMLDivElement>,
+	extends HTMLAttributes<HTMLDivElement>,
 		CarouselRootProps {
 	opts?: CarouselOptions;
 	plugins?: CarouselPlugin;
@@ -137,9 +146,9 @@ const Carousel = ({
 			}}
 		>
 			<div
+				role="region"
 				onKeyDownCapture={handleKeyDown}
 				className={twMerge("relative", className)}
-				role="region"
 				aria-roledescription="carousel"
 				{...props}
 			>
@@ -149,15 +158,21 @@ const Carousel = ({
 	);
 };
 
-const CarouselContent = ({
+const CarouselContent = <T extends object>({
 	className,
 	...props
-}: React.ComponentProps<"div">) => {
+}: ListBoxSectionProps<T>) => {
 	const { carouselRef, orientation } = useCarousel();
 
 	return (
-		<div aria-label="Slides" ref={carouselRef} className="overflow-hidden">
-			<div
+		<ListBox
+			layout={orientation === "vertical" ? "stack" : "grid"}
+			aria-label="Slides"
+			orientation={orientation}
+			ref={carouselRef}
+			className="overflow-hidden"
+		>
+			<ListBoxSection
 				className={twMerge(
 					"flex",
 					orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
@@ -165,21 +180,23 @@ const CarouselContent = ({
 				)}
 				{...props}
 			/>
-		</div>
+		</ListBox>
 	);
 };
 
-const CarouselItem = ({ className, ...props }: React.ComponentProps<"div">) => {
+const CarouselItem = ({ className, ...props }: ListBoxItemProps) => {
 	const { orientation } = useCarousel();
 
 	return (
-		<div
+		<ListBoxItem
 			aria-label={`Slide ${props.id}`}
 			aria-roledescription="slide"
-			className={twMerge(
-				"xd24r group relative min-w-0 shrink-0 grow-0 basis-full focus:outline-hidden focus-visible:outline-hidden",
-				orientation === "horizontal" ? "pl-4" : "pt-4",
+			className={composeTailwindRenderProps(
 				className,
+				twJoin(
+					"xd24r group relative min-w-0 shrink-0 grow-0 basis-full focus:outline-hidden focus-visible:outline-hidden",
+					orientation === "horizontal" ? "pl-4" : "pt-4",
+				),
 			)}
 			{...props}
 		/>

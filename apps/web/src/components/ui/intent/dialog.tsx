@@ -9,10 +9,10 @@ import {
 	Text,
 } from "react-aria-components";
 
-import { Button, type ButtonProps } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { twJoin, twMerge } from "tailwind-merge";
+import { Button, type ButtonProps } from "./button";
+import { composeTailwindRenderProps } from "./primitive";
 
 const Dialog = ({
 	role = "dialog",

@@ -1,5 +1,5 @@
 import Loader from "@/components/loader";
-import { AppProviders } from "@/components/providers/app-provider";
+import { AppProviders } from "@/components/provider/app-provider";
 import { ORPCContext, link, type orpc } from "@/utils/orpc";
 import { createORPCClient } from "@orpc/client";
 import { createORPCReactQueryUtils } from "@orpc/react-query";

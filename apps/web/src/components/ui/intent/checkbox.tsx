@@ -11,9 +11,9 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { Description, FieldError, Label } from "@/components/ui/field";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { twMerge } from "tailwind-merge";
+import { Description, FieldError, Label } from "./field";
+import { composeTailwindRenderProps } from "./primitive";
 
 interface CheckboxGroupProps extends CheckboxGroupPrimitiveProps {
 	label?: string;
@@ -60,13 +60,13 @@ const boxStyles = tv({
 		isSelected: {
 			false: "bg-muted",
 			true: [
-				"inset-ring-primary bg-primary text-primary-fg",
-				"group-invalid:inset-ring-danger/70 group-invalid:bg-danger group-invalid:text-danger-fg",
+				"border-primary bg-primary text-primary-fg",
+				"group-invalid:border-danger/70 group-invalid:bg-danger group-invalid:text-danger-fg",
 			],
 		},
 		isFocused: {
 			true: [
-				"inset-ring-primary ring-4 ring-ring/20",
+				"border-primary ring-4 ring-primary/20",
 				"group-invalid:border-danger/70 group-invalid:text-danger-fg group-invalid:ring-danger/20",
 			],
 		},
@@ -109,9 +109,9 @@ const Checkbox = ({
 						})}
 					>
 						{isIndeterminate ? (
-							<IconMinus className="size-3.5" data-slot="checkbox-indicator" />
+							<IconMinus />
 						) : isSelected ? (
-							<IconCheck className="size-3.5" data-slot="checkbox-indicator" />
+							<IconCheck />
 						) : null}
 					</div>
 

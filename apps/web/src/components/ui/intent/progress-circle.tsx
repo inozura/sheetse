@@ -2,13 +2,22 @@ import { ProgressBar, type ProgressBarProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 
 interface ProgressCircleProps extends Omit<ProgressBarProps, "className"> {
+	show?: boolean;
 	className?: string;
 	ref?: React.RefObject<HTMLDivElement>;
 }
 
-const ProgressCircle = ({ className, ref, ...props }: ProgressCircleProps) => {
+const ProgressCircle = ({
+	className,
+	show = true,
+	ref,
+	...props
+}: ProgressCircleProps) => {
 	const c = "50%";
 	const r = "calc(50% - 2px)";
+
+	if (!show) return null;
+
 	return (
 		<ProgressBar {...props} ref={ref}>
 			{({ percentage, isIndeterminate }) => (

@@ -1,15 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { DateInput } from "@/components/ui/date-field";
-import {
-	Description,
-	FieldError,
-	FieldGroup,
-	Label,
-} from "@/components/ui/field";
-import { Popover } from "@/components/ui/popover";
-import { RangeCalendar } from "@/components/ui/range-calendar";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconCalendarDays } from "@intentui/icons";
 import type { DateDuration } from "@internationalized/date";
 import {
@@ -21,6 +9,13 @@ import {
 	type ValidationResult,
 } from "react-aria-components";
 import { twJoin } from "tailwind-merge";
+import { Button } from "./button";
+import { Calendar } from "./calendar";
+import { DateInput } from "./date-field";
+import { Description, FieldError, FieldGroup, Label } from "./field";
+import { Popover } from "./popover";
+import { composeTailwindRenderProps } from "./primitive";
+import { RangeCalendar } from "./range-calendar";
 
 interface DatePickerOverlayProps
 	extends Omit<DialogProps, "children" | "className" | "style">,
@@ -37,13 +32,11 @@ const DatePickerOverlay = ({
 	visibleDuration = { months: 1 },
 	closeButton = true,
 	pageBehavior = "visible",
-	placement = "bottom",
 	range,
 	...props
 }: DatePickerOverlayProps) => {
 	return (
 		<Popover.Content
-			placement={placement}
 			isDismissable={false}
 			showArrow={false}
 			className={twJoin(
@@ -82,8 +75,7 @@ const DatePickerIcon = () => (
 );
 
 interface DatePickerProps<T extends DateValue>
-	extends DatePickerPrimitiveProps<T>,
-		Pick<DatePickerOverlayProps, "placement"> {
+	extends DatePickerPrimitiveProps<T> {
 	label?: string;
 	description?: string;
 	errorMessage?: string | ((validation: ValidationResult) => string);
@@ -94,7 +86,6 @@ const DatePicker = <T extends DateValue>({
 	className,
 	description,
 	errorMessage,
-	placement,
 	...props
 }: DatePickerProps<T>) => {
 	return (
@@ -112,7 +103,7 @@ const DatePicker = <T extends DateValue>({
 			</FieldGroup>
 			{description && <Description>{description}</Description>}
 			<FieldError>{errorMessage}</FieldError>
-			<DatePickerOverlay placement={placement} />
+			<DatePickerOverlay />
 		</DatePickerPrimitive>
 	);
 };

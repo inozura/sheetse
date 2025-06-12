@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
 import { IconChevronLgLeft, IconChevronLgRight } from "@intentui/icons";
 import {
 	type CalendarDate,
@@ -27,6 +25,8 @@ import {
 	useLocale,
 } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
+import { Button } from "./button";
+import { Select } from "./select";
 
 interface CalendarProps<T extends DateValue>
 	extends Omit<CalendarPrimitiveProps<T>, "visibleDuration"> {
@@ -195,7 +195,6 @@ const SelectYear = ({ state }: { state: CalendarState }) => {
 			aria-label="Select year"
 			selectedKey={20}
 			onSelectionChange={(value) => {
-				// @ts-expect-error
 				state.setFocusedDate(years[Number(value)]?.value);
 			}}
 		>

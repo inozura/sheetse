@@ -1,8 +1,8 @@
 import { createContext, use, useRef, useState } from "react";
 
-import type { MenuContentProps } from "@/components/ui/menu";
-import { Menu } from "@/components/ui/menu";
 import { twMerge } from "tailwind-merge";
+import type { MenuContentProps } from "./menu";
+import { Menu } from "./menu";
 
 interface ContextMenuTriggerContextType {
 	buttonRef: React.RefObject<HTMLButtonElement | null>;
@@ -107,7 +107,7 @@ const ContextMenuContent = <T extends object>(
 
 const ContextMenuItem = Menu.Item;
 const ContextMenuSeparator = Menu.Separator;
-const ContextMenuDescription = Menu.Description;
+const ContextMenuItemDetails = Menu.ItemDetails;
 const ContextMenuSection = Menu.Section;
 const ContextMenuHeader = Menu.Header;
 const ContextMenuKeyboard = Menu.Keyboard;
@@ -118,7 +118,7 @@ ContextMenu.Content = ContextMenuContent;
 ContextMenu.Item = ContextMenuItem;
 ContextMenu.Label = ContextMenuLabel;
 ContextMenu.Separator = ContextMenuSeparator;
-ContextMenu.Description = ContextMenuDescription;
+ContextMenu.ItemDetails = ContextMenuItemDetails;
 ContextMenu.Section = ContextMenuSection;
 ContextMenu.Header = ContextMenuHeader;
 ContextMenu.Keyboard = ContextMenuKeyboard;

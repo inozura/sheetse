@@ -1,25 +1,5 @@
 import React from "react";
 
-import { Button } from "@/components/ui/button";
-import {
-	DropdownDescription,
-	DropdownItem,
-	DropdownLabel,
-	DropdownSection,
-} from "@/components/ui/dropdown";
-import {
-	Description,
-	FieldError,
-	FieldGroup,
-	Input,
-	Label,
-} from "@/components/ui/field";
-import { ListBox } from "@/components/ui/list-box";
-import {
-	PopoverContent,
-	type PopoverContentProps,
-} from "@/components/ui/popover";
-import { composeTailwindRenderProps } from "@/lib/primitive";
 import { IconChevronLgDown, IconX } from "@intentui/icons";
 import type {
 	ComboBoxProps as ComboboxPrimitiveProps,
@@ -34,6 +14,12 @@ import {
 	ComboBox as ComboboxPrimitive,
 	useSlottedContext,
 } from "react-aria-components";
+import { Button } from "./button";
+import { DropdownItem, DropdownLabel, DropdownSection } from "./dropdown";
+import { Description, FieldError, FieldGroup, Input, Label } from "./field";
+import { ListBox } from "./list-box";
+import { PopoverContent, type PopoverContentProps } from "./popover";
+import { composeTailwindRenderProps } from "./primitive";
 
 interface ComboBoxProps<T extends object>
 	extends Omit<ComboboxPrimitiveProps<T>, "children"> {
@@ -92,7 +78,7 @@ const ComboBoxList = <T extends object>({
 			<ListBox
 				className={composeTailwindRenderProps(
 					className,
-					"max-h-[inherit] min-w-[inherit] border-0 shadow-none",
+					"max-h-[inherit] border-0 shadow-none",
 				)}
 				layout="stack"
 				orientation="vertical"
@@ -106,7 +92,7 @@ const ComboBoxList = <T extends object>({
 };
 
 const ComboBoxInput = (props: InputProps) => {
-	const context = useSlottedContext(ComboBoxContext)!;
+	const context = useSlottedContext(ComboBoxContext);
 	return (
 		<FieldGroup className="relative pl-0">
 			<Input {...props} placeholder={props?.placeholder} />
@@ -142,16 +128,14 @@ const ComboBoxClearButton = () => {
 	);
 };
 
-const ComboBoxSection = DropdownSection;
 const ComboBoxOption = DropdownItem;
 const ComboBoxLabel = DropdownLabel;
-const ComboBoxDescription = DropdownDescription;
+const ComboBoxSection = DropdownSection;
 
 ComboBox.Input = ComboBoxInput;
 ComboBox.List = ComboBoxList;
 ComboBox.Option = ComboBoxOption;
 ComboBox.Label = ComboBoxLabel;
-ComboBox.Description = ComboBoxDescription;
 ComboBox.Section = ComboBoxSection;
 
 export type { ComboBoxProps, ComboBoxListProps };
