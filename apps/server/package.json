@@ -6,28 +6,31 @@
 		"build": "tsc && tsc-alias",
 		"check-types": "tsc --noEmit",
 		"compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
-		"dev": "bun run --hot src/index.ts",
-		"start": "bun run dist/src/index.js",
-		"db:local": "turso dev --db-file local.db",
+		"dev": "bunx wrangler dev",
+		"deploy": "bun run build && bunx wrangler deploy --release",
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate"
 	},
 	"dependencies": {
-		"dotenv": "^16.4.7",
-		"zod": "^3.25.16",
-		"@orpc/server": "^1.2.0",
-		"@orpc/client": "^1.2.0",
-		"hono": "^4.7.6",
-		"drizzle-orm": "^0.38.4",
 		"@libsql/client": "^0.14.0",
-		"better-auth": "^1.2.8"
+		"@orpc/client": "^1.2.0",
+		"@orpc/server": "^1.2.0",
+		"better-auth": "^1.2.8",
+		"dotenv": "^16.4.7",
+		"drizzle-orm": "^0.38.4",
+		"drizzle-seed": "^0.3.1",
+		"hono": "^4.7.6",
+		"uuid": "^11.1.0",
+		"zod": "^3.25.16"
 	},
 	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250610.0",
+		"@types/bun": "^1.2.6",
+		"drizzle-kit": "^0.30.5",
 		"tsc-alias": "^1.8.11",
 		"typescript": "^5.8.2",
-		"@types/bun": "^1.2.6",
-		"drizzle-kit": "^0.30.5"
+		"wrangler": "^4.19.2"
 	}
 }

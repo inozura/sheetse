@@ -1,5 +1,5 @@
 import { protectedProcedure, publicProcedure } from "../lib/orpc";
-import { todoRouter } from "./todo";
+import { fileRouter } from "./file";
 
 export const appRouter = {
 	healthCheck: publicProcedure.handler(() => {
@@ -11,6 +11,6 @@ export const appRouter = {
 			user: context.session?.user,
 		};
 	}),
-	todo: todoRouter,
+	file: fileRouter,
 };
 export type AppRouter = typeof appRouter;

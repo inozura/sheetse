@@ -1,14 +1,33 @@
+import { relations } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { storage } from "./storage";
 
 export const user = sqliteTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
 	emailVerified: integer("email_verified", { mode: "boolean" }).notNull(),
-	image: text("image"),
-	createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-	updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+	username: text("username").unique(),
+	displayUsername: text("display_username"),
+
+	imageId: text("image_id")
+		.unique()
+		.references(() => storage.id),
+
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	updatedAt: integer("updated_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
 });
+
+export const userRelationship = relations(user, ({ one }) => ({
+	image: one(storage, {
+		fields: [user.imageId],
+		references: [storage.id],
+	}),
+}));
 
 export const session = sqliteTable("session", {
 	id: text("id").primaryKey(),
@@ -41,8 +60,12 @@ export const account = sqliteTable("account", {
 	}),
 	scope: text("scope"),
 	password: text("password"),
-	createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-	updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	updatedAt: integer("updated_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
 });
 
 export const verification = sqliteTable("verification", {
@@ -50,6 +73,10 @@ export const verification = sqliteTable("verification", {
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" }),
-	updatedAt: integer("updated_at", { mode: "timestamp" }),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	updatedAt: integer("updated_at", { mode: "timestamp" })
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
 });

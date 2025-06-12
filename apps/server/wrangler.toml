@@ -1,0 +1,29 @@
+name = "sheetpipes-server"
+main = "./src/index.ts"
+compatibility_date = "2025-05-25"
+compatibility_flags = [ "nodejs_compat" ]
+
+# D1 Database configuration
+[[d1_databases]]
+binding = "DB"
+database_name = "sheetpipes"
+database_id = ""
+migrations_dir = "drizzle/migrations"
+
+# KV configuration
+[[kv_namespaces]]
+binding = "sheetpipes_cache"
+id = ""
+
+[dev]
+port = 3000
+
+[vars]
+CORS_ORIGIN="http://localhost:3001"
+BETTER_AUTH_SECRET=""
+BETTER_AUTH_URL="http://localhost:3000"
+DATABASE_URL="file:./local.db"
+DATABASE_AUTH_TOKEN=""
+# Google
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
